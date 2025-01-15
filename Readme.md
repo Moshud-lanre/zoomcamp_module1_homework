@@ -12,8 +12,6 @@ This project demonstrates how to set up a Postgres database using Docker and cre
 
 ## Project Structure
 
-.
-
 ├── terraform
 │   ├── main.tf
 │   ├── provider.tf
