@@ -1,0 +1,83 @@
+Question 1 - What is version of the pip package ?
+Ans - 24.3.1
+
+Question 2 - what is the hostname and port that pgadmin should use to connect to the postgres database?
+Ans - db:5432
+
+Question 3 - During the period of October 1st 2019 (inclusive) and November 1st 2019 (exclusive), how many trips, respectively, happened:
+
+Up to 1 mile
+code:
+    SELECT COUNT(*) AS numb_trips 
+    FROM green_taxi gt 
+    WHERE trip_distance <= 1;
+Answer: 104,838;
+
+In between 1 (exclusive) and 3 miles (inclusive)
+code: 
+    SELECT COUNT(*) AS numb_trips 
+    FROM green_taxi gt 
+    WHERE trip_distance > 1 and trip_distance <= 3;
+Answer: 199,013;
+
+In between 3 (exclusive) and 7 miles (inclusive)
+code:
+    SELECT COUNT(*) AS numb_trips 
+    FROM green_taxi gt 
+    WHERE trip_distance > 3 and trip_distance <= 7;
+Answer: 109,645;
+
+In between 7 (exclusive) and 10 miles (inclusive)
+Code:
+    SELECT COUNT(*) AS numb_trips 
+    FROM green_taxi gt 
+    WHERE trip_distance > 7 and trip_distance <= 10;
+Answer: 27,688;
+
+Over 10 miles
+Code:
+    SELECT COUNT(*) AS numb_trips 
+    FROM green_taxi gt 
+    WHERE trip_distance > 10;
+Ans:   35,202
+
+Question 4 - Which was the pick up day with the longest trip distance? Use the pick up time for your calculations.
+Code:
+    SELECT CAST(lpep_pickup_datetime  AS date) AS pu_date, MAX(trip_distance) AS max_trip
+    FROM green_taxi gt
+    GROUP BY 1
+    ORDER BY MAX(trip_distance) DESC;
+Ans - 2019-10-31
+
+Question 5 - Which were the top pickup locations with over 13,000 in total_amount (across all trips) for 2019-10-18?
+Code: 
+     SELECT  CAST(lpep_pickup_datetime  AS date) AS pu_date, "Zone" ,  SUM(total_amount) AS sum_total
+    FROM taxi_zone tz 
+    JOIN green_taxi gt 
+    ON tz."LocationID" = gt."PULocationID" 
+    WHERE CAST(lpep_pickup_datetime  AS date) = '2019-10-18'
+    GROUP BY 1,2
+    HAVING  SUM(total_amount) > 13000;
+
+Ans - East Harlem North, East Harlem South, Morningside Heights
+
+
+Question 6 - For the passengers picked up in october 2019 in the zone name "East Harlem North" which was the drop off zone that had the largest tip?
+Code:
+    SELECT "DOLocationID", "Zone" AS DO_Zone, tip_amount
+    FROM green_taxi gt
+    JOIN taxi_zone tz  ON gt."DOLocationID" = tz."LocationID"  
+    WHERE "PULocationID" = 74
+    ORDER BY tip_amount desc
+    LIMIT 1;
+
+Ans - JFK Airport
+
+
+Question 7 - Which of the following sequences, respectively, describes the workflow for:
+
+Downloading the provider plugins and setting up backend,
+Generating proposed changes and auto-executing the plan
+Remove all resources managed by terraform
+
+Ans - terraform init, terraform apply -auto-aprove, terraform destroy
